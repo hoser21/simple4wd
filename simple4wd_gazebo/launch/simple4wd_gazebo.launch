@@ -20,7 +20,7 @@
   <group ns="/simple4wd">
 
     <!-- Convert an xacro and put on parameter server -->
-    <param name="robot_description" command="$(find xacro)/xacro '$(find simple4wd_description)/urdf/model.urdf.xacro'" />
+    <param name="robot_description" command="$(find xacro)/xacro '$(find simple4wd_description)/urdf/simple4wd.urdf.xacro'" />
 
     <!-- Spawn a robot into Gazebo -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-unpause -urdf -param robot_description -model simple4wd"/>
