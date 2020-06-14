@@ -3,7 +3,7 @@ A ROS package to display a simple URDF robot model in rviz.
 
 ## Usage
 ```
-roslaunch simple_description rviz.launch
+roslaunch simple4wd_description rviz.launch
 ```
 
 ## Helpful References

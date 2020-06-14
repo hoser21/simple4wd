@@ -1,6 +1,6 @@
 <launch>
   <!-- Load robot model -->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find simple_description)/urdf/model.urdf.xacro'"/>
+  <param name="robot_description" command="$(find xacro)/xacro '$(find simple4wd_description)/urdf/model.urdf.xacro'"/>
 
   <!-- Send fake joint values -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
@@ -10,5 +10,5 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
   <!-- Show in Rviz and load a config that displays the robot -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find simple_description)/launch/model.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find simple4wd_description)/launch/model.rviz"/>
 </launch>

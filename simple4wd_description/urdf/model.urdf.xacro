@@ -4,7 +4,7 @@
   xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Import wheel element -->
-  <xacro:include filename="$(find simple_description)/urdf/wheel.urdf.xacro" />
+  <xacro:include filename="$(find simple4wd_description)/urdf/wheel.urdf.xacro" />
 
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
