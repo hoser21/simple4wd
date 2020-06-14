@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<!-- Reference: https://github.com/qboticslabs/mastering_ros_robot_description_pkg/blob/master/urdf/wheel.urdf.xacro -->
+
+<robot name="wheel" 
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="wheel" params="name_link parent_link mass radius width translate_x translate_y translate_z">
+    <link name="${name_link}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+        <geometry>
+          <cylinder length="${width}" radius="${radius}" />
+        </geometry>
+        <material name="cyan"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0 " />
+        <geometry>
+          <cylinder length="${width}" radius="${radius}" />
+        </geometry>
+      </collision>
+
+      <inertial>
+        <mass value="${mass}" />
+        <origin xyz="0 0 0" />
+        <inertia
+          ixx="${mass*(3*radius*radius+width*width)/12}" ixy="0" ixz="0"
+          iyy="${mass*(3*radius*radius+width*width)/12}" iyz="0"
+          izz="${mass*radius*radius/2}" />
+      </inertial>
+    </link>
+
+    <joint name="${name_link}_joint" type="continuous">
+      <parent link="${parent_link}"/>
+      <child link="${name_link}_link"/>
+      <origin xyz="${translate_x} ${translate_y} ${translate_z}" rpy="0 0 0" />
+      <axis xyz="0 1 0" rpy="0 0 0" />
+    </joint>
+
+    <transmission name="${name_link}_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<actuator name="${name_link}_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+			<joint name="${name_link}_joint">
+				<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			</joint>
+		</transmission>
+
+    <gazebo reference="${name_link}_link">
+      <material>Gazebo/Grey</material>
+			<mu1 value="1"/>
+			<mu2 value="1"/>
+			<kp value="10000000.0" />
+			<kd value="1.0" />
+			<fdir1 value="1 0 0"/>
+		</gazebo>
+
+  </xacro:macro>
+
+</robot>
