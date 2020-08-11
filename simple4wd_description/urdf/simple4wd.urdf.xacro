@@ -3,9 +3,11 @@
 <robot name="simple4wd" 
   xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- Import wheel element -->
+  <!-- Import urdf.xacro files -->
   <xacro:include filename="$(find simple4wd_description)/urdf/wheel.urdf.xacro" />
+  <xacro:include filename="$(find simple4wd_description)/urdf/accessories/hokuyo_laser.urdf.xacro" />
 
+  <!-- ROS Control Plugin -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/simple4wd</robotNamespace>
@@ -29,8 +31,17 @@
     <color rgba="0 1.0 1.0 1.0"/>
   </material>
 
+  <!-- Dummy link that doesn't have inertia -->
+  <link name="base_link" />
+
+  <joint name="base_link_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
   <!-- Robot Base (front is facing positive x) -->
-  <link name="base_link">
+  <link name="chassis_link">
     <visual>
       <geometry>
         <box size="${BASE_WIDTH} ${BASE_LENGTH} ${BASE_HEIGHT}"/>
@@ -56,7 +67,7 @@
 
   <!-- Wheels -->
   <xacro:wheel 
-    name_link="left_front_wheel" parent_link="base_link"
+    name_link="left_front_wheel" parent_link="chassis_link"
     mass="${WHEEL_MASS}" radius="${WHEEL_RADIUS}" width="${WHEEL_WIDTH}"
     translate_x="${BASE_WIDTH/2 - 2*WHEEL_RADIUS}"
     translate_y="${BASE_LENGTH/2 + WHEEL_WIDTH/2}"
@@ -64,7 +75,7 @@
   />
 
   <xacro:wheel
-    name_link="right_back_wheel" parent_link="base_link"
+    name_link="right_back_wheel" parent_link="chassis_link"
     mass="${WHEEL_MASS}" radius="${WHEEL_RADIUS}" width="${WHEEL_WIDTH}"
     translate_x="${-(BASE_WIDTH/2 - 2*WHEEL_RADIUS)}"
     translate_y="${-(BASE_LENGTH/2 + WHEEL_WIDTH/2)}"
@@ -72,7 +83,7 @@
   />
 
   <xacro:wheel
-    name_link="right_front_wheel" parent_link="base_link"
+    name_link="right_front_wheel" parent_link="chassis_link"
     mass="${WHEEL_MASS}" radius="${WHEEL_RADIUS}" width="${WHEEL_WIDTH}"
     translate_x="${BASE_WIDTH/2 - 2*WHEEL_RADIUS}"
     translate_y="${-(BASE_LENGTH/2 + WHEEL_WIDTH/2)}"
@@ -80,11 +91,17 @@
   />
 
   <xacro:wheel
-    name_link="left_back_wheel" parent_link="base_link"
+    name_link="left_back_wheel" parent_link="chassis_link"
     mass="${WHEEL_MASS}" radius="${WHEEL_RADIUS}" width="${WHEEL_WIDTH}"
     translate_x="${-(BASE_WIDTH/2 - 2*WHEEL_RADIUS)}"
     translate_y="${BASE_LENGTH/2 + WHEEL_WIDTH/2}"
     translate_z="${-WHEEL_RADIUS}"
+  />
+
+  <!-- Sensors -->
+  <xacro:hokuyo_laser
+    prefix="chassis" parent_link="chassis_link"
+    trans_x="0" trans_y="0" trans_z="${BASE_HEIGHT}"
   />
 
 </robot>
