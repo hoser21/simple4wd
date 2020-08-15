@@ -1,0 +1,36 @@
+odom_frame: simple4wd/odom
+base_frame: simple4wd/base_link
+map_frame: map
+
+map_update_interval: 5.0
+
+maxUrange: 5.0
+maxRange: 30.1
+particles: 30
+
+# Update frequencies
+linearUpdate: 0.1
+angularUpdate: 0.1
+temporalUpdate: 2.0
+resampleThreshold: 0.5
+
+# Initial Map Size
+xmin: -10.0
+ymin: -10.0
+xmax: 10.0
+ymax: 10.0
+delta: 0.02
+
+# All default
+sigma: 0.05
+kernelSize: 1
+lstep: 0.05
+astep: 0.05
+iterations: 5
+lsigma: 0.075
+ogain: 3.0
+lskip: 0
+llsamplerange: 0.01
+llsamplestep: 0.01
+lasamplerange: 0.005
+lasamplestep: 0.005

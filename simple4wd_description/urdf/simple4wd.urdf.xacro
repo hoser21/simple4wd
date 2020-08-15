@@ -7,10 +7,21 @@
   <xacro:include filename="$(find simple4wd_description)/urdf/wheel.urdf.xacro" />
   <xacro:include filename="$(find simple4wd_description)/urdf/accessories/hokuyo_laser.urdf.xacro" />
 
-  <!-- ROS Control Plugin -->
+  <!-- Gazebo Plugins -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/simple4wd</robotNamespace>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>chassis_link</bodyName>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>20.0</updateRate>
     </plugin>
   </gazebo>
 

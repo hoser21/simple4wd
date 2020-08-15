@@ -3,8 +3,7 @@
 <robot name="simple4wd"
   xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="hokuyo_laser" params="prefix parent_link trans_x trans_y trans_z
-   robot_namespace:=/simple4wd frame:=laser topic:=scan">
+  <xacro:macro name="hokuyo_laser" params="prefix parent_link trans_x trans_y trans_z">
 
     <link name="${prefix}_hokuyo_link">
       <collision>
@@ -69,8 +68,8 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
-          <topicName>${topic}</topicName>
-          <frameName>${frame}</frameName>
+          <topicName>/simple4wd/laser/scan</topicName>
+          <frameName>${prefix}_hokuyo_link</frameName>
           <robotNamespace>${robot_namespace}</robotNamespace>
         </plugin>
       </sensor>

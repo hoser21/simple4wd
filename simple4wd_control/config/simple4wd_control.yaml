@@ -9,6 +9,8 @@ mobile_base_controller:
   left_wheel: ['left_front_wheel_joint', 'left_back_wheel_joint']
   right_wheel: ['right_front_wheel_joint', 'right_back_wheel_joint']
   publish_rate: 50
+  base_frame_id: "/simple4wd/base_link"
+  odom_frame_id: "/simple4wd/odom"
   pid: {p: 100.0, i: 0.01, d: 10.0}
 
   # Odometry covariances for the encoder output of the robot. These values should

@@ -1,0 +1,10 @@
+<launch>
+
+  <arg name="scan_topic" default="simple4wd/laser/scan" />
+
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <rosparam file="$(find simple4wd_navigation)/config/gmapping.yaml" command="load" />
+    <remap from="scan" to="$(arg scan_topic)"/>
+  </node>
+
+</launch>
