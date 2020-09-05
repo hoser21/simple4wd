@@ -70,7 +70,7 @@
         <plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
           <topicName>/simple4wd/laser/scan</topicName>
           <frameName>${prefix}_hokuyo_link</frameName>
-          <robotNamespace>${robot_namespace}</robotNamespace>
+          <robotNamespace>simple4wd</robotNamespace>
         </plugin>
       </sensor>
     </gazebo>
