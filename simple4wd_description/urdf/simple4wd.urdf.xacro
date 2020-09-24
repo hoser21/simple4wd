@@ -6,6 +6,7 @@
   <!-- Import urdf.xacro files -->
   <xacro:include filename="$(find simple4wd_description)/urdf/wheel.urdf.xacro" />
   <xacro:include filename="$(find simple4wd_description)/urdf/accessories/hokuyo_laser.urdf.xacro" />
+  <xacro:include filename="$(find simple4wd_description)/urdf/accessories/kinect_camera.urdf.xacro" />
 
   <!-- Gazebo Plugins -->
   <gazebo>
@@ -112,7 +113,11 @@
   <!-- Sensors -->
   <xacro:hokuyo_laser
     prefix="chassis" parent_link="chassis_link"
-    trans_x="0" trans_y="0" trans_z="${BASE_HEIGHT}"
+    trans_x="0" trans_y="0" trans_z="${BASE_HEIGHT * 2}"
   />
+
+  <xacro:kinect_camera prefix="kinect" parent_link="chassis_link">
+    <origin xyz="${BASE_LENGTH/2} 0 ${BASE_HEIGHT}" rpq="${PI} 0 0" />
+  </xacro:kinect_camera>
 
 </robot>

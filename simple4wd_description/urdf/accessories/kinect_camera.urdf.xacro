@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+
+<!--
+  References: http://gazebosim.org/tutorials/?tut=ros_depth_camera
+    https://github.com/husky/husky/blob/melodic-devel/husky_description/urdf/accessories/intel_realsense.urdf.xacro
+    https://github.com/PR2/pr2_common/blob/indigo-devel/pr2_description/urdf/sensors/kinect_camera.gazebo.xacro
+-->
+
+<robot name="simple4wd"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="kinect_camera" params="prefix parent_link *origin">
+    <link name="${prefix}_camera_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.073000 0.276000 0.072000"/>
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://simple4wd_description/meshes/kinect.dae"/>
+        </geometry>
+        <material name="cyan"/>
+      </visual>
+
+      <inertial>
+        <mass value="0.1" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia
+          ixx="1e-5" ixy="0" ixz="0"
+          iyy="1e-5" iyz="0"
+          izz="1e-5"
+        />
+      </inertial>
+    </link>
+
+    <joint name="${prefix}_camera_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent_link}"/>
+      <child link="${prefix}_camera_link"/>
+    </joint>
+
+    <gazebo reference="${prefix}_camera_link">
+      <sensor name="${prefix}_camera" type="depth">
+        <update_rate>20</update_rate>
+        <camera>
+          <horizontal_fov>1.047198</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>3</far>
+          </clip>
+        </camera>
+        <plugin name="${prefix}_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+          <baseline>0.2</baseline>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>1.0</updateRate>
+          <cameraName>${prefix}_camera</cameraName>
+          <imageTopicName>/simple4wd/${prefix}_camera/color/image_raw</imageTopicName>
+          <cameraInfoTopicName>/simple4wd/${prefix}_camera/color/camera_info</cameraInfoTopicName>
+          <depthImageTopicName>/simple4wd/${prefix}_camera/depth/image_raw</depthImageTopicName>
+          <depthImageInfoTopicName>/simple4wd/${prefix}_camera/depth/camera_info</depthImageInfoTopicName>
+          <pointCloudTopicName>/simple4wd/${prefix}_camera/depth/points</pointCloudTopicName>
+          <frameName>${prefix}_camera_link</frameName>
+          <pointCloudCutoff>0.5</pointCloudCutoff>
+          <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+          <distortionK1>0.00000001</distortionK1>
+          <distortionK2>0.00000001</distortionK2>
+          <distortionK3>0.00000001</distortionK3>
+          <distortionT1>0.00000001</distortionT1>
+          <distortionT2>0.00000001</distortionT2>
+          <CxPrime>0</CxPrime>
+          <Cx>0</Cx>
+          <Cy>0</Cy>
+          <focalLength>0</focalLength>
+          <hackBaseline>0</hackBaseline>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+</robot>
