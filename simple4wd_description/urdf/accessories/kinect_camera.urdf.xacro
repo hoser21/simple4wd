@@ -43,6 +43,15 @@
       <child link="${prefix}_camera_link"/>
     </joint>
 
+    <!-- Fixes bug with depth camera frame
+      https://answers.ros.org/question/218395/libgazebo_ros_openni_kinectso-depth-pointcloud-wrong-tf/ -->
+    <link name="${prefix}_camera_depth_link"/>
+    <joint name="${prefix}_camera_depth_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}"/>
+      <parent link="${prefix}_camera_link"/>
+      <child link="${prefix}_camera_depth_link"/>
+    </joint>
+    
     <gazebo reference="${prefix}_camera_link">
       <sensor name="${prefix}_camera" type="depth">
         <update_rate>20</update_rate>
@@ -68,7 +77,7 @@
           <depthImageTopicName>/simple4wd/${prefix}_camera/depth/image_raw</depthImageTopicName>
           <depthImageInfoTopicName>/simple4wd/${prefix}_camera/depth/camera_info</depthImageInfoTopicName>
           <pointCloudTopicName>/simple4wd/${prefix}_camera/depth/points</pointCloudTopicName>
-          <frameName>${prefix}_camera_link</frameName>
+          <frameName>${prefix}_camera_depth_link</frameName>
           <pointCloudCutoff>0.5</pointCloudCutoff>
           <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
           <distortionK1>0.00000001</distortionK1>

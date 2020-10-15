@@ -1,14 +1,14 @@
 # Reference: http://wiki.ros.org/navigation/Tutorials/RobotSetup
 
 TrajectoryPlannerROS:
-  max_vel_x: 1.0
-  min_vel_x: 0.1
-  max_vel_theta: 1.0
-  min_vel_theta: -1.0
-  min_in_place_vel_theta: 0.4
+  max_vel_x: 0.5
+  min_vel_x: 0.24
+  max_vel_theta: 0.5
+  min_vel_theta: -0.5
+  min_in_place_vel_theta: 0.25
 
-  acc_lim_theta: 3.2
-  acc_lim_x: 2.5
+  acc_lim_theta: 4
+  acc_lim_x: 0.75
 
   # A holonomic robot can strafe.
   holonomic_robot: false
@@ -16,5 +16,10 @@ TrajectoryPlannerROS:
   # Trajectory scoring parameters
   meter_scoring: true  # Whether the gdist_scale and pdist_scale parameters should assume that goal_distance and path_distance are expressed in units of meters or cells. Cells are assumed by default (false).
   occdist_scale:  10 # The weighting for how much the controller should attempt to avoid obstacles. default 0.01
-  pdist_scale: 20  # The weighting for how much the controller should stay close to the path it was given . default 0.6
-  gdist_scale: 0.1 # The weighting for how much the controller should attempt to reach its local goal, also controls speed  default 0.8
+  pdist_scale: 0.7  # The weighting for how much the controller should stay close to the path it was given . default 0.6
+  gdist_scale: 0.8 # The weighting for how much the controller should attempt to reach its local goal, also controls speed  default 0.8
+
+  xy_goal_tolerance: 0.25
+  yaw_goal_tolerance: 0.25
+
+  sim_time: 1.5

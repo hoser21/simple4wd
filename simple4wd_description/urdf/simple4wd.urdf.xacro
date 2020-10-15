@@ -117,7 +117,7 @@
   />
 
   <xacro:kinect_camera prefix="kinect" parent_link="chassis_link">
-    <origin xyz="${BASE_LENGTH/2} 0 ${BASE_HEIGHT}" rpq="${PI} 0 0" />
+    <origin xyz="${BASE_LENGTH/2} 0 ${BASE_HEIGHT + 0.1}" rpq="${PI} ${-PI/4} 0" />
   </xacro:kinect_camera>
 
 </robot>
